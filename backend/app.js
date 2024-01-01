@@ -7,7 +7,23 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
-// API endpoint to fetch teams
+// Example API endpoint to fetch data
+app.get('/api/article', async (req, res) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM "Article"');
+    res.json(rows);
+  } catch (error) {
+    console.error('Error executing query', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Add a route for the root path
+app.get('/', (req, res) => {
+  res.send('Welcome to the API!');
+});
+
+// Example API endpoint to fetch data
 app.get('/api/teams', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM team');
